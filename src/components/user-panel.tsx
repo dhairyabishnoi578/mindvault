@@ -5,6 +5,7 @@ import { createClient } from "@/lib/auth/client";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -32,12 +33,14 @@ export function UserPanel({ email }: { email: string }) {
         {getInitials(email)}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
-        <DropdownMenuLabel>
-          <div className="flex items-center gap-2">
-            <UserIcon className="size-4" />
-            <span className="truncate text-xs font-normal">{email}</span>
-          </div>
-        </DropdownMenuLabel>
+        <DropdownMenuGroup>
+          <DropdownMenuLabel>
+            <div className="flex items-center gap-2">
+              <UserIcon className="size-4" />
+              <span className="truncate text-xs font-normal">{email}</span>
+            </div>
+          </DropdownMenuLabel>
+        </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="cursor-pointer" onClick={() => router.push("/dashboard")}>
           <LayoutDashboardIcon className="size-4" />
