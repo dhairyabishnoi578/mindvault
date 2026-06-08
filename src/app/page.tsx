@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { LandingHeader } from "@/components/landing-header";
 
 const features = [
   {
@@ -21,23 +22,7 @@ const features = [
 export default function Home() {
   return (
     <div className="flex flex-1 flex-col">
-      <header className="flex items-center justify-between px-6 py-4 sm:px-10">
-        <span className="text-lg font-semibold tracking-tight">MindVault</span>
-        <div className="flex items-center gap-4">
-          <Link
-            href="/login"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            Sign in
-          </Link>
-          <Link
-            href="/register"
-            className="inline-flex h-9 items-center justify-center rounded-md bg-foreground px-4 text-sm font-medium text-background shadow transition-colors hover:bg-foreground/90"
-          >
-            Get Started
-          </Link>
-        </div>
-      </header>
+      <LandingHeader />
 
       <main className="flex flex-1 flex-col items-center justify-center px-6 py-20">
         <div className="mx-auto max-w-2xl text-center">
