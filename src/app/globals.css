@@ -34,6 +34,8 @@
 }
 
 :root {
+  --gradient-hero: radial-gradient(ellipse 80% 50% at 50% -20%,
+    oklch(0.85 0.1 265.755 / 0.35), transparent);
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -62,6 +64,8 @@
 }
 
 .dark {
+  --gradient-hero: radial-gradient(ellipse 80% 50% at 50% -20%,
+    oklch(0.4 0.15 265.755 / 0.3), transparent);
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.145 0 0);

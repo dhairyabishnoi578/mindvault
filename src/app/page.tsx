@@ -1,21 +1,25 @@
 import Link from "next/link";
 import { LandingHeader } from "@/components/landing-header";
+import { FileTextIcon, PenToolIcon, CheckSquareIcon } from "lucide-react";
 
 const features = [
   {
     title: "Rich Notes",
     description:
       "Block-based editor powered by TipTap. Write, organize, and search your notes with ease.",
+    icon: FileTextIcon,
   },
   {
     title: "Whiteboard Canvas",
     description:
       "Infinite canvas for diagrams, sketches, and mind maps powered by Excalidraw.",
+    icon: PenToolIcon,
   },
   {
     title: "Task Management",
     description:
       "Kanban-style tasks with priorities, statuses, and real-time updates.",
+    icon: CheckSquareIcon,
   },
 ];
 
@@ -25,7 +29,10 @@ export default function Home() {
       <LandingHeader />
 
       <main className="flex flex-1 flex-col items-center justify-center px-6 py-20">
-        <div className="mx-auto max-w-2xl text-center">
+        <div
+          className="mx-auto w-full max-w-2xl text-center py-32 -my-32 rounded-[100px]"
+          style={{ background: "var(--gradient-hero)" }}
+        >
           <span className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium">
             Coming Soon
           </span>
@@ -52,18 +59,24 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mt-24 grid gap-6 sm:grid-cols-3">
-          {features.map((feature) => (
-            <div
-              key={feature.title}
-              className="rounded-lg border p-6 text-left"
-            >
-              <h3 className="font-semibold">{feature.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                {feature.description}
-              </p>
-            </div>
-          ))}
+        <div className="mt-24 grid gap-6 sm:grid-cols-3 w-full max-w-4xl">
+          {features.map((feature) => {
+            const Icon = feature.icon;
+            return (
+              <div
+                key={feature.title}
+                className="rounded-lg border p-6 text-left"
+              >
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-muted">
+                  <Icon className="size-5 text-foreground" />
+                </div>
+                <h3 className="font-semibold">{feature.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {feature.description}
+                </p>
+              </div>
+            );
+          })}
         </div>
       </main>
 
