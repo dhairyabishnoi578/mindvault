@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/auth/client";
+import { Input } from "@/components/ui/input";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -11,6 +12,7 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [confirmed, setConfirmed] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -18,7 +20,7 @@ export default function RegisterPage() {
     setLoading(true);
 
     const supabase = createClient();
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
     });
@@ -29,8 +31,30 @@ export default function RegisterPage() {
       return;
     }
 
-    router.push("/dashboard");
-    router.refresh();
+    if (!data.session) {
+      setConfirmed(true);
+      setLoading(false);
+      return;
+    }
+
+    router.replace("/dashboard");
+  }
+
+  if (confirmed) {
+    return (
+      <div className="w-full max-w-sm space-y-6 p-6 text-center">
+        <h1 className="text-2xl font-semibold tracking-tight">Check your email</h1>
+        <p className="text-sm text-muted-foreground">
+          We sent a confirmation link to <strong>{email}</strong>. Click the link to activate your account.
+        </p>
+        <Link
+          href="/login"
+          className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90"
+        >
+          Sign in
+        </Link>
+      </div>
+    );
   }
 
   return (
@@ -47,14 +71,13 @@ export default function RegisterPage() {
           <label htmlFor="email" className="text-sm font-medium">
             Email
           </label>
-          <input
+          <Input
             id="email"
             type="email"
             placeholder="you@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           />
         </div>
 
@@ -62,7 +85,7 @@ export default function RegisterPage() {
           <label htmlFor="password" className="text-sm font-medium">
             Password
           </label>
-          <input
+          <Input
             id="password"
             type="password"
             placeholder="Choose a password"
@@ -70,7 +93,6 @@ export default function RegisterPage() {
             onChange={(e) => setPassword(e.target.value)}
             required
             minLength={6}
-            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           />
         </div>
 
